@@ -1,7 +1,7 @@
 {
   "name": "ntwitbot",
   "version": "1.0.0",
-  "description": "A simple interactive twitter bot.",
+  "description": "An interactive twitter bot.",
   "author": "Jordan Sne",
   "main": "index.js",
   "license": "MIT",
@@ -13,8 +13,11 @@
   },
   "devDependencies": {
     "coveralls": "^3.0.0",
-    "eslint": "^4.8.0",
+    "eslint": "^4.17.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-node": "^5.2.0",
+    "eslint-plugin-react": "^7.6.1",
     "jest": "^21.2.1"
   },
   "scripts": {

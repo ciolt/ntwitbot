@@ -8,9 +8,11 @@
     "plugins": [
         "node"
     ],
-    "extends": "eslint:recommended",
+    "parserOptions": {
+        "sourceType": "module"
+    },
+    "extends": "airbnb",
     "rules": {
-        "indent": "off",
         "linebreak-style": [
             "error",
             "unix"
@@ -22,6 +24,23 @@
         "semi": [
             "error",
             "always"
-        ]
+        ],
+        "no-const-assign": "warn",
+        "no-undef": "warn",
+        "no-unreachable": "warn",
+        "no-unused-vars": "warn",
+        "valid-jsdoc": ["error", {
+            "requireReturn": true,
+            "requireReturnType": true,
+            "requireParamDescription": true,
+            "requireReturnDescription": true
+        }],
+        "require-jsdoc": ["error", {
+            "require": {
+                "FunctionDeclaration": true,
+                "MethodDefinition": true,
+                "ClassDeclaration": true
+            }
+        }]
     }
 }
