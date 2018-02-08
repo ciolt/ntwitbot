@@ -6,6 +6,7 @@
  */
 
 const timers        = require('timers');
+const humanInterval = require('human-interval');
 
 const Data          = require('./data.js'),
       Generate      = require('./generate.js'),
@@ -16,6 +17,7 @@ const Data          = require('./data.js'),
 
 /**
  * Primary class of the bot. Handles all primary functions.
+ * @constructor
  */
 module.exports = class Main {
 
@@ -25,14 +27,15 @@ module.exports = class Main {
      * @param {Object} setup - The setup object from the config.
      */
     constructor(secretData, setup) {
-        this.TWEET_INTERVAL = 15 /*min*/ * 60 /*s*/ * 1000 /*ms*/;
+        /** @todo Change this to be dynamic, according to configuration */
+        this.TWEET_INTERVAL = humanInterval(setup.configure.tweet_every);
 
         this.secretData = secretData;
         this.setup = setup;
 
         this.utils = new Util();
         this.utils.log('Starting NTwitBot ' + process.env.npm_package_version + '..');
-        this.utils.setDebug(this.setup.debug);
+        this.utils.setDebug(this.setup.configure.debug);
 
         this.dataHandler    = new Data(this.utils);
         this.processor      = new Process(this.utils);
@@ -78,6 +81,7 @@ module.exports = class Main {
 
     /**
      * Starts the event handler.
+     * @returns {void} Does not return any value.
      */
     start() {
         this.runUpdate();
@@ -89,6 +93,7 @@ module.exports = class Main {
 
     /**
      * Scheduled 15 min interval bot update.
+     * @returns {void} Does not return any value.
      */
     runUpdate() {
         let updateState = false;
@@ -156,7 +161,7 @@ module.exports = class Main {
     /**
      * Combines tweet retrievals to a single array of tweets and updates the state.
      * @private
-     * @param {2D Array} retrievals - An array of tweet retrievals (array).
+     * @param {Array} retrievals An array of tweet retrievals (array).
      * @return {Array} The array of all received tweets.
      */
     processRetrievals(retrievals) {
@@ -183,17 +188,17 @@ module.exports = class Main {
      * @return {Promise} Resolves when done updating.
      */
     updateTracked() {
-        return this.twitterHandler.getFollowing().then((following) => {
-            const ids = following.ids;
+        return this.twitterHandler.getUserID(this.setup.configure.track_users).then((users) => {
+            const ids = users;
 
-            // Add any new follows to the trackedUsers list
+            // Add any new tracked users to the trackedUsers list
             for (const user of ids) {
                 if (!(user in this.state.trackedUsers)) {
                     this.state.trackedUsers[user] = 0;
                 }
             }
 
-            // Remove any trackedUsers that the bot is no longer following
+            // Remove any trackedUsers that are no longer listed
             for (const user in this.state.trackedUsers) {
                 if (!this.utils.isInArray(ids, user)) {
                     delete this.state.trackedUsers[user];

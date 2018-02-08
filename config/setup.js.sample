@@ -1,3 +1,31 @@
 module.exports = {
-    "debug": false
+    configure: {
+        debug: false,
+        
+        // Users to avoid interacting with
+        blacklist: [
+            '@foo', '@bar'
+        ],
+        
+        // Users to explicitly track for new Tweets
+        track_users: [
+            '@Apple', 'Microsoft'
+        ],
+        
+        // Tweet something every 10 minutes
+        // See https://github.com/agenda/human-interval
+        tweet_every: '10 minutes',
+
+        // Range in seconds to randomize delay when performing actions
+        delay: {
+            min_seconds: 1,
+            max_seconds: 6
+        }
+    },
+    onStartup: () => {},
+    onMessage: () => {},
+    onFollow: () => {},
+    onTimeline: () => {},
+    onLike: () => {},
+    onRetweet: () => {}
 };

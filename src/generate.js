@@ -7,6 +7,7 @@
 
 /**
  * Tweet generator class.
+ * @constructor
  */
 module.exports = class Generate {
 
@@ -192,10 +193,11 @@ module.exports = class Generate {
     /**
      * Pops the last word or the only two words off the stack and marks the entries as beenPopped.
      * @private
-     * @param {Stack} wordStack - Current array of strings (words).
+     * @param {Array} wordStack - Current array of strings (words).
      * @param {Object} wordDB - The database object of tweets.
+     * @returns {Array} The word stack with the popped words marked as beenPopped.
      */
-    popWord(wordStack, wordDB) {
+    static popWord(wordStack, wordDB) {
         const numOfWords = wordStack.length;
 
         if (numOfWords >= 3) {

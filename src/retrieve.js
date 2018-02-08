@@ -7,6 +7,7 @@
 
 /**
  * Data retriever class. Retrieves and pre-processes data from Twitter.
+ * @constructor
  */
 module.exports = class Retrieve {
 
@@ -19,6 +20,7 @@ module.exports = class Retrieve {
         this.twitterHandler = twitterHandler;
         this.utils = utils;
 
+        /** @todo Change this to be dynamic per user, with a max of 3000 */
         this.TWEETS_TO_TRACK = 3000;
     }
 

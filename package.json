@@ -9,6 +9,7 @@
     "chance": "~1.0.11",
     "colors": "~1.1.2",
     "html-entities": "~1.2.1",
+    "human-interval": "^0.1.6",
     "twitter": "^1.7.1"
   },
   "devDependencies": {

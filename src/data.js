@@ -9,6 +9,7 @@ const fs = require('fs');
 
 /**
  * Database & IO handler class.
+ * @constructor
  */
 module.exports = class Data {
 
@@ -74,9 +75,11 @@ module.exports = class Data {
     /**
      * Inserts new data to a data object. Add to the existingData by reference.
      * @private
-     * @param {Object} newData - The new tweet data to be saved.
+     * @param {Object} data Existing data to add to.
+     * @param {Object} newData The new tweet data to be saved.
+     * @returns {Object} Returns the data value.
      */
-    insertData(data, newData) {
+    static insertData(data, newData) {
         for (const key in newData) {
             if (key in data) {
                 for (const entry of newData[key]) {

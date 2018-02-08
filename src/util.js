@@ -12,6 +12,7 @@ const colors = require('colors');
 
 /**
  * Utilities class. Contains logging and helper methods.
+ * @constructor
  */
 module.exports = class Util {
 

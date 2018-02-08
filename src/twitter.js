@@ -9,12 +9,13 @@ const TwitterModule = require('twitter');
 
 /**
  * Twitter API interactor class. Gets data directly from Twitter.
+ * @constructor
  */
 module.exports = class Twitter {
 
     /**
      * Initialize the class.
-     * @param {Object} secretData - The secret data for the Twitter API.
+     * @param {{consumer_key: string, consumer_secret: string, access_token_key: string, access_token_secret: string}} secretData The secret data for the Twitter API.
      * @param {Util} utils - The utilities object needed for logging, etc.
      */
     constructor(secretData, utils) {
@@ -37,6 +38,45 @@ module.exports = class Twitter {
             return this.ownID;
         }, (error) => {
             this.utils.logError('Failed to verify twitter configuration');
+            throw error;
+        });
+    }
+
+    /**
+     * Gets a list of usernames and returns a list of IDs.
+     * @param {Array<string|number>} listOfUsernames An array containing stringed usernames.
+     * @returns {Promise} Resolves with an array of user IDs.
+     */
+    getUserID(listOfUsernames) {
+        let usernames = [];
+        let userIDs = [];
+        for (const i in listOfUsernames) {
+            /**
+             * if - Tests to see if a username is actually a user ID 
+             * else if - Tests to see if a username is a normal one
+             */
+            if (RegExp('^\d+$','g').test(listOfUsernames[i])) {
+                userIDs.push(listOfUsernames[i]);
+            } else {
+                usernames.push(listOfUsernames[i].replace(/[@]/, ''));
+            }
+        }
+        
+        const data = {
+            include_entities: false,
+            screen_name: usernames.join(','),
+            user_id: userIDs.join(',')
+        };
+        return this.postRequest('users/lookup', data).then((users) => {
+            const userList = users.map((val) => {
+                return val.id_str;
+            });
+            return userList;
+        }).catch((error) => {
+            this.utils.logError('Failed to get Twitter IDs');
+            if (listOfUsernames.length > 100) {
+                this.utils.logError('Cannot get user IDs for more than 100 users at a time.');
+            }
             throw error;
         });
     }

@@ -9,6 +9,7 @@ const entities = require('html-entities').AllHtmlEntities;
 
 /**
  * Tweet processor class. Processes new tweet data & saves it in the database.
+ * @constructor
  */
 module.exports = class Process {
 
