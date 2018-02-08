@@ -5,7 +5,7 @@
  */
 
 const Main = require('../../src/main.js');
-const main = new Main({}, { debug: false });
+const main = new Main({}, { configure: { debug: false }});
 
 describe('Main', () => {
     describe('Initialization', () => {

@@ -9,7 +9,7 @@ module.exports = {
         
         // Users to explicitly track for new Tweets
         track_users: [
-            '@Apple', 'Microsoft'
+            '@Google', '@Microsoft'
         ],
         
         // Tweet something every 10 minutes

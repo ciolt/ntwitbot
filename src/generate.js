@@ -197,7 +197,7 @@ module.exports = class Generate {
      * @param {Object} wordDB - The database object of tweets.
      * @returns {Array} The word stack with the popped words marked as beenPopped.
      */
-    static popWord(wordStack, wordDB) {
+    popWord(wordStack, wordDB) {
         const numOfWords = wordStack.length;
 
         if (numOfWords >= 3) {

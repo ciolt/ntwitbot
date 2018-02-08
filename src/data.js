@@ -79,7 +79,7 @@ module.exports = class Data {
      * @param {Object} newData The new tweet data to be saved.
      * @returns {Object} Returns the data value.
      */
-    static insertData(data, newData) {
+    insertData(data, newData) {
         for (const key in newData) {
             if (key in data) {
                 for (const entry of newData[key]) {
